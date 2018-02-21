@@ -39,7 +39,7 @@ def process(rawdir, fileLim, batchMode):
 		print "doneFileList: ", doneFileList
 	except:
 		print "Load Unsuccessful, initializing data storage"
-		firstvis = rawpy.imread(rawdir+filelist[0]).raw_image_visible
+		firstvis = rawpy.imread(rawdir+filelist[0]).raw_image_visible	#fails here if directory is empty
 		collector = np.zeros(firstvis.shape)
 		runSum = np.zeros(firstvis.shape)
 		runSum2 = np.zeros(firstvis.shape)
@@ -59,9 +59,6 @@ def process(rawdir, fileLim, batchMode):
 			runSum2 = np.add(runSum2, np.square(adjVal))
 			doneFileList.append(f)
 			newFileList.append(f)
-	
-	with open(rawdir+"cosmic.pickle","wb") as pickleFile:
-		pickle.dump([runNum, runSum, runSum2, assumedPixelAverage, doneFileList, collector], pickleFile, protocol=pickle.HIGHEST_PROTOCOL)
 	
 	sigmaLim = np.sqrt(runNum) + 1.0
 	bbox = 10
@@ -123,6 +120,8 @@ def process(rawdir, fileLim, batchMode):
 	#	im = Image.fromarray(np.clip(m,0,None))
 	#	im.save(rawdir+"test"+str(i)+".png")
 	
+	with open(rawdir+"cosmic.pickle","wb") as pickleFile:
+		pickle.dump([runNum, runSum, runSum2, assumedPixelAverage, doneFileList, collector], pickleFile, protocol=pickle.HIGHEST_PROTOCOL)
 	
 	collectorScaled = np.clip(np.divide(collector,4.0),0,255).astype('uint8')
 	collectorIM = Image.fromarray(collectorScaled)
