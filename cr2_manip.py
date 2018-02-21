@@ -35,8 +35,7 @@ def process(rawdir, fileLim, batchMode):
 	try:
 		with open(rawdir+"cosmic.pickle","rb") as pickleFile:
 			runNum, runSum, runSum2, assumedPixelAverage, doneFileList, collector = pickle.load(pickleFile)
-		print "Loaded Successfully!"
-		print "doneFileList: ", doneFileList
+		print "Loaded Data from "+str(len(doneFileList))+" Files Successfully!"
 	except:
 		print "Load Unsuccessful, initializing data storage"
 		firstvis = rawpy.imread(rawdir+filelist[0]).raw_image_visible	#fails here if directory is empty
@@ -100,7 +99,7 @@ def process(rawdir, fileLim, batchMode):
 			SAOim = Image.fromarray(SAOscaled)
 			saveFileName = rawdir+"SAO"+str(i)+".png"
 			SAOim.save(saveFileName)
-			if cosmicFlag:
+			if cosmicFlag and not batchMode:
 				displayList.append(subprocess.Popen(["eog",saveFileName]))
 	
 	#	darkSub = np.divide(np.subtract(vis,mean),stdclip)
@@ -131,8 +130,11 @@ if __name__ == "__main__":
 	while True:
 		rawdir = sys.argv[1]
 		fileLim = None
-		batchMode = False
+		batchMode = True
 		process(rawdir, fileLim, batchMode)
+		if batchMode:
+			print "Batch Analysis Completed. Exiting."
+			sys.exit(0)
 		try:
 			print "Sleeping 10 seconds..."
 			time.sleep(10)
