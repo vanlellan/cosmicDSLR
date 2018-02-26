@@ -20,6 +20,7 @@ import pickle
 import subprocess
 import time
 import signal
+from optparse import OptionParser
 
 def process(rawdir, fileLim, batchMode):
 	
@@ -127,10 +128,18 @@ def process(rawdir, fileLim, batchMode):
 	collectorIM.save(rawdir+"all_hits.png")
 
 if __name__ == "__main__":
+
+        ## Define the command line input
+        parser = OptionParser('Usage: %prog [options] raw-dir-path')
+        parser.add_option('-l', '--file-lim', type='int', dest = 'fileLim', help = 'Limit on number of files to read in.', default = None, metavar="LIMIT")
+        parser.add_option('-b', '--batch', action="store_true", dest = 'batch', help = 'Enable batch mode.', default = False)
+        (options, args) = parser.parse_args()
+
+
 	while True:
-		rawdir = sys.argv[1]
-		fileLim = None
-		batchMode = True
+		rawdir = sys.args[0]	#possibly make this handle a list of input directories
+		fileLim = options.fileLim
+		batchMode = options.batch
 		process(rawdir, fileLim, batchMode)
 		if batchMode:
 			print "Batch Analysis Completed. Exiting."
