@@ -1,14 +1,11 @@
 #
 # ToDo
 #DONE	-pickle sum, sum2, and num instead of mean and mean2 (and save as just one picklejar)
-#	-store everything in source directory by default (create new cosmic-search directory within source dir), with option to store in a different directory
-#	-add command-line options
-
-
-#		-these two actually might not be worth it, need to reprocess all images each time the sum and sum2 are updates....
-#		-still interesting for a live-mode display, not so much for analyzing a full data set while the data is coming in
-#	-make this code a function, add wrapper script for live-updating search during exposure session
-#	-save name of each added image to list, check against list before each add (save this list to the picklejar as well)
+#DONE	-store everything in source directory by default (create new cosmic-search directory within source dir), with option to store in a different directory
+#DONE	-add command-line options
+#DONE	-make this code a function, add wrapper script for live-updating search during exposure session
+#DONE	-save name of each added image to list, check against list before each add (save this list to the picklejar as well)
+#	-add option to delete raw images after import (useful for a long-running live display, to save disk space)
 
 
 import rawpy
