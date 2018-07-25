@@ -21,6 +21,15 @@
 #DONE	-make this code a function, add wrapper script for live-updating search during exposure session
 #DONE	-save name of each added image to list, check against list before each add (save this list to the picklejar as well)
 #	-add option to delete raw images after import (useful for a long-running live display, to save disk space)
+#	-write simple gui for looking through captured images (tkinter)
+#	-implement 'streaming readout' philosophy
+	#	1- continuously capture 'live view', 
+	#	2- process each frame to look for tracks in separate thread (on separate machine?))
+	#	3- 'trigger' on things that look like they contain tracks
+	#	4- save 'triggered' images, throw away all others (also save running average?)
+	#	5- extend to multiple sensors, look for coincidence in step #3
+#	-use machine learning to separate track/non-track events
+	#	-use hodoscope-triggered tagged data for training
 
 
 import rawpy
